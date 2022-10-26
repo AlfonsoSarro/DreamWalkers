@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 1854488327}
   - component: {fileID: 1854488328}
   - component: {fileID: 1854488325}
+  - component: {fileID: 1854488329}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -353,6 +354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumpHeight: 5
+  animator: {fileID: 1854488329}
 --- !u!114 &1854488328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,6 +393,25 @@ MonoBehaviour:
   m_DefaultActionMap: Grounded
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!95 &1854488329
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854488322}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 535f3b6494a3413498054bc7ca4bb6db, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2124445468
 GameObject:
   m_ObjectHideFlags: 0
