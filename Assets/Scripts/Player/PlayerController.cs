@@ -6,30 +6,42 @@ public class PlayerController : MonoBehaviour
     private PlayerInput playerInput;
     private InputAction jumpAction; //Store our controls
     private InputAction moveAction; //Store our controls
+    private InputAction crouchAction; //Store our controls
     public float speed;
     public float jumpHeight;
     public Animator animator;
     new Rigidbody2D rigidbody;
+    new CapsuleCollider2D collider;
     
     bool grounded = false;
     bool canDoubleJump = false;
     bool facingLeft = false;
+
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
         jumpAction = playerInput.actions["Jump"];
         moveAction = playerInput.actions["Move"];
+        crouchAction = playerInput.actions["Crouch"];
     }
     
     private void OnDisable()
     {
         jumpAction.performed -= Jump;
+        jumpAction.canceled -= StopJump;
+        crouchAction.performed -= Crouch;
+        crouchAction.canceled -= StopCrouch;
     }
 
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        collider = GetComponent<CapsuleCollider2D>();
         jumpAction.performed += Jump;
+        jumpAction.canceled += StopJump;
+        crouchAction.performed += Crouch;
+        crouchAction.canceled += StopCrouch;
+
     }
 
     void Jump(InputAction.CallbackContext context)
@@ -55,6 +67,38 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void StopJump(InputAction.CallbackContext context)
+    {
+        if(rigidbody.velocity.y > 0f)
+        {
+            Vector2 velocity = rigidbody.velocity;
+            velocity.y = rigidbody.velocity.y * 0.5f;
+            rigidbody.velocity = velocity;
+        }
+    }
+
+    void Crouch(InputAction.CallbackContext context)
+    {
+        Vector2 colliderSize = collider.size;
+        Vector2 colliderOffset = collider.offset;
+        colliderSize.y = collider.size.y / 2;
+        colliderOffset.y = collider.offset.y - (collider.size.y / 4);
+        collider.size = colliderSize;
+        collider.offset = colliderOffset;
+        animator.SetBool("Crouching", true);
+    }
+
+    void StopCrouch(InputAction.CallbackContext context)
+    {
+        Vector2 colliderSize = collider.size;
+        Vector2 colliderOffset = collider.offset;
+        colliderSize.y = collider.size.y * 2;
+        colliderOffset.y = 0.73f;
+        collider.size = colliderSize;
+        collider.offset = colliderOffset;
+        animator.SetBool("Crouching", false);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         grounded = true;
@@ -63,56 +107,29 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Grounded", true);
         animator.SetBool("DoubleJump", false);
     }
-    /*
-    void Move(InputAction.CallbackContext context)
-    {
-        Vector2 velocity = rigidbody.velocity;
-        velocity.x = moveAction.ReadValue<float>() * speed;
-        rigidbody.velocity = velocity;
-    }
-    */
+    
     void Update()
     {
-        Vector2 velocity = rigidbody.velocity;
-        velocity.x = moveAction.ReadValue<float>() * speed;
-        rigidbody.velocity = velocity;
-        if(velocity.x < 0 && !facingLeft)
+        Vector2 charVelocity = rigidbody.velocity;
+        charVelocity.x = moveAction.ReadValue<float>() * speed;
+        rigidbody.velocity = charVelocity;
+        if (charVelocity.x < 0 && !facingLeft)
         {
             transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
             facingLeft = true;
         }
-        if (velocity.x > 0 && facingLeft)
+        if (charVelocity.x > 0 && facingLeft)
         {
             transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
             facingLeft = false;
         }
-        animator.SetFloat("Velocity", Mathf.Abs(velocity.x));
-        if(velocity.y < 0)
+        animator.SetFloat("Velocity", Mathf.Abs(charVelocity.x));
+        if (charVelocity.y < -0.1f)
         {
             grounded = false;
             animator.SetBool("Falling", true);
             animator.SetBool("Grounded", false);
             animator.SetBool("Jumping", false);
         }
-    
-        /*
-        //Read movement value
-        float movementInput = playerControls.Grounded.Move.ReadValue<float>();
-        print("[PlayerController] Movement value read is " + movementInput);
-        Vector2 velocity = rigidbody.velocity;
-        velocity.x = movementInput * speed;
-        
-        print("[PlayerController] Rigidbody velocity in X is " + velocity.x);
-        float jumpInput = playerControls.Grounded.Jump.ReadValue<float>();
-        if(jumpInput != 0 && !onAir)
-        {
-            onAir = true;
-            velocity.y = 5f;
-        }
-        
-        rigidbody.velocity = velocity;
-        */
     }
-
-    
 }
