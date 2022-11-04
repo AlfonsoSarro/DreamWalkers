@@ -44,6 +44,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""6337554c-57ab-48c9-8ff9-fbc6c0e6659e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -189,6 +198,39 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""654b4dc9-bf22-47e4-be9d-8478cc3a1a50"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8999ded7-5227-40e3-b4e0-5260740a6a01"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e6dd3648-77cb-4345-bece-5ec6ab333bcf"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -199,6 +241,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Grounded = asset.FindActionMap("Grounded", throwIfNotFound: true);
         m_Grounded_Move = m_Grounded.FindAction("Move", throwIfNotFound: true);
         m_Grounded_Jump = m_Grounded.FindAction("Jump", throwIfNotFound: true);
+        m_Grounded_Crouch = m_Grounded.FindAction("Crouch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -260,12 +303,14 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private IGroundedActions m_GroundedActionsCallbackInterface;
     private readonly InputAction m_Grounded_Move;
     private readonly InputAction m_Grounded_Jump;
+    private readonly InputAction m_Grounded_Crouch;
     public struct GroundedActions
     {
         private @PlayerControls m_Wrapper;
         public GroundedActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Grounded_Move;
         public InputAction @Jump => m_Wrapper.m_Grounded_Jump;
+        public InputAction @Crouch => m_Wrapper.m_Grounded_Crouch;
         public InputActionMap Get() { return m_Wrapper.m_Grounded; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -281,6 +326,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Jump.started -= m_Wrapper.m_GroundedActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_GroundedActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_GroundedActionsCallbackInterface.OnJump;
+                @Crouch.started -= m_Wrapper.m_GroundedActionsCallbackInterface.OnCrouch;
+                @Crouch.performed -= m_Wrapper.m_GroundedActionsCallbackInterface.OnCrouch;
+                @Crouch.canceled -= m_Wrapper.m_GroundedActionsCallbackInterface.OnCrouch;
             }
             m_Wrapper.m_GroundedActionsCallbackInterface = instance;
             if (instance != null)
@@ -291,6 +339,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Crouch.started += instance.OnCrouch;
+                @Crouch.performed += instance.OnCrouch;
+                @Crouch.canceled += instance.OnCrouch;
             }
         }
     }
@@ -299,5 +350,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
     }
 }
