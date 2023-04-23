@@ -13,12 +13,14 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float jumpHeight;
     public LayerMask groundLayerMask;
+    public float coyoteTime = 0.2f;
 
     private Animator animator;
     //Vector that will store the position of the respawn
     private static Vector3 respawnPoint = new Vector3(-1, -5.5f, 0);
     new Rigidbody2D rigidbody;
     new CapsuleCollider2D collider;
+    private float coyoteCounter;
     
     bool canDoubleJump = false;
     bool facingLeft = false;
@@ -63,13 +65,13 @@ public class PlayerController : MonoBehaviour
     {
         if(!crouching)
         {
-            if (IsGrounded() || canDoubleJump)
+            if (coyoteCounter > 0f || canDoubleJump)
             {
                 animator.SetBool("Grounded", false);
                 animator.SetBool("Falling", false);
                 Vector2 velocity = rigidbody.velocity;
                 velocity.y = jumpHeight;
-                if (!IsGrounded())
+                if (!(coyoteCounter > 0f))
                 {
                     animator.SetBool("DoubleJump", true);
                     canDoubleJump = false;
@@ -92,6 +94,7 @@ public class PlayerController : MonoBehaviour
             Vector2 velocity = rigidbody.velocity;
             velocity.y = rigidbody.velocity.y * 0.5f;
             rigidbody.velocity = velocity;
+            coyoteCounter = 0f;
         }
     }
 
@@ -150,6 +153,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if(IsGrounded())
+        {
+            coyoteCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteCounter -= Time.deltaTime;
+        }
+
         if(!crouching)
         {
             Vector2 charVelocity = rigidbody.velocity;
