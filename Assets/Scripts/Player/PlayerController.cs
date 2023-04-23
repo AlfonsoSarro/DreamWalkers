@@ -3,19 +3,26 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+
     private PlayerInput playerInput;
     private InputAction jumpAction; //Store our controls
     private InputAction moveAction; //Store our controls
     private InputAction crouchAction; //Store our controls
+    private InputAction quitAction; //Store our controls
+
     public float speed;
     public float jumpHeight;
-    public Animator animator;
+    public LayerMask groundLayerMask;
+
+    private Animator animator;
+    //Vector that will store the position of the respawn
+    private static Vector3 respawnPoint = new Vector3(-1, -5.5f, 0);
     new Rigidbody2D rigidbody;
     new CapsuleCollider2D collider;
     
-    bool grounded = false;
     bool canDoubleJump = false;
     bool facingLeft = false;
+    bool crouching = false;
 
     private void Awake()
     {
@@ -23,6 +30,8 @@ public class PlayerController : MonoBehaviour
         jumpAction = playerInput.actions["Jump"];
         moveAction = playerInput.actions["Move"];
         crouchAction = playerInput.actions["Crouch"];
+        quitAction = playerInput.actions["Quit"];
+        transform.position = respawnPoint;
     }
     
     private void OnDisable()
@@ -37,34 +46,43 @@ public class PlayerController : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         collider = GetComponent<CapsuleCollider2D>();
+        animator = GetComponent<Animator>();
         jumpAction.performed += Jump;
         jumpAction.canceled += StopJump;
         crouchAction.performed += Crouch;
         crouchAction.canceled += StopCrouch;
-
+        quitAction.performed += Quit;
+        respawnPoint = transform.position;
     }
 
+    private void Quit(InputAction.CallbackContext context)
+    {
+        Application.Quit();
+    }
     void Jump(InputAction.CallbackContext context)
     {
-        
-        if (grounded || canDoubleJump)
+        if(!crouching)
         {
-            animator.SetBool("Grounded", false);
-            animator.SetBool("Falling", false);
-            Vector2 velocity = rigidbody.velocity;
-            velocity.y = jumpHeight;
-            if (!grounded)
+            if (IsGrounded() || canDoubleJump)
             {
-                animator.SetBool("DoubleJump", true);
-                canDoubleJump = false;
+                animator.SetBool("Grounded", false);
+                animator.SetBool("Falling", false);
+                Vector2 velocity = rigidbody.velocity;
+                velocity.y = jumpHeight;
+                if (!IsGrounded())
+                {
+                    animator.SetBool("DoubleJump", true);
+                    canDoubleJump = false;
+                }
+                else
+                {
+                    animator.SetBool("Jumping", true);
+                }
+                rigidbody.velocity = velocity;
             }
-            else
-            {
-                animator.SetBool("Jumping", true);
-                grounded = false;
-            }
-            rigidbody.velocity = velocity;
         }
+        
+        
     }
 
     void StopJump(InputAction.CallbackContext context)
@@ -79,6 +97,8 @@ public class PlayerController : MonoBehaviour
 
     void Crouch(InputAction.CallbackContext context)
     {
+        crouching = true;
+        rigidbody.velocity = new Vector2(0, 0);
         Vector2 colliderSize = collider.size;
         Vector2 colliderOffset = collider.offset;
         colliderSize.y = collider.size.y / 2;
@@ -97,39 +117,71 @@ public class PlayerController : MonoBehaviour
         collider.size = colliderSize;
         collider.offset = colliderOffset;
         animator.SetBool("Crouching", false);
+        crouching = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        grounded = true;
-        canDoubleJump = true;
-        animator.SetBool("Falling", false);
-        animator.SetBool("Grounded", true);
-        animator.SetBool("DoubleJump", false);
+        switch(collision.tag)
+        {
+            case "Checkpoint":
+                respawnPoint = new Vector3(transform.position.x + 5, transform.position.y, transform.position.z);
+                break;
+        }
     }
-    
+
+    private bool IsGrounded()
+    {
+        float extraHeight = 0.1f;
+        RaycastHit2D rayHit = Physics2D.BoxCast(collider.bounds.center, collider.bounds.size - new Vector3(0.5f,0f,0f), 0f, Vector2.down, extraHeight, groundLayerMask);
+        if(rayHit.collider != null)
+        {
+            animator.SetBool("Grounded", true);
+            animator.SetBool("DoubleJump", false);
+            animator.SetBool("Falling", false);
+            canDoubleJump = true;
+        }
+        else
+        {
+            animator.SetBool("Grounded", false);
+        }
+        return rayHit.collider != null;
+    }
+
     void Update()
     {
-        Vector2 charVelocity = rigidbody.velocity;
-        charVelocity.x = moveAction.ReadValue<float>() * speed;
-        rigidbody.velocity = charVelocity;
-        if (charVelocity.x < 0 && !facingLeft)
+        if(!crouching)
         {
-            transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
-            facingLeft = true;
+            Vector2 charVelocity = rigidbody.velocity;
+            charVelocity.x = moveAction.ReadValue<float>() * speed;
+            rigidbody.velocity = charVelocity;
+            if (charVelocity.x < 0 && !facingLeft)
+            {
+                transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+                facingLeft = true;
+            }
+            if (charVelocity.x > 0 && facingLeft)
+            {
+                transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+                facingLeft = false;
+            }
+            animator.SetFloat("Velocity", Mathf.Abs(charVelocity.x));
+            if (!IsGrounded()) 
+            {
+                if(charVelocity.y < -0.1f)
+                {
+                    animator.SetBool("Falling", true);
+                    animator.SetBool("Jumping", false);
+                }
+                else
+                {
+                    animator.SetBool("Falling", false);
+                    animator.SetBool("Jumping", true);
+                }
+            }
+            
         }
-        if (charVelocity.x > 0 && facingLeft)
-        {
-            transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
-            facingLeft = false;
-        }
-        animator.SetFloat("Velocity", Mathf.Abs(charVelocity.x));
-        if (charVelocity.y < -0.1f)
-        {
-            grounded = false;
-            animator.SetBool("Falling", true);
-            animator.SetBool("Grounded", false);
-            animator.SetBool("Jumping", false);
-        }
+        
+        
     }
 }
