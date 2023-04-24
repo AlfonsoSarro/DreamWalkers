@@ -2123,6 +2123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ffb44a63d92813469c5a52f5500debd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slider: {fileID: 1935900709}
   mixer: {fileID: 24100000, guid: 89e06e238783fa94d98012797ef6c89c, type: 2}
 --- !u!1 &2145239534
 GameObject:
