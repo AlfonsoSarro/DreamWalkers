@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+
     private PlayerInput playerInput;
     private InputAction jumpAction; //Store our controls
     private InputAction moveAction; //Store our controls
@@ -11,14 +12,16 @@ public class PlayerController : MonoBehaviour
 
     public float speed;
     public float jumpHeight;
+    public LayerMask groundLayerMask;
+    public float coyoteTime = 0.2f;
 
     private Animator animator;
     //Vector that will store the position of the respawn
     private static Vector3 respawnPoint = new Vector3(-1, -5.5f, 0);
     new Rigidbody2D rigidbody;
     new CapsuleCollider2D collider;
+    private float coyoteCounter;
     
-    bool grounded = false;
     bool canDoubleJump = false;
     bool facingLeft = false;
     bool crouching = false;
@@ -52,7 +55,6 @@ public class PlayerController : MonoBehaviour
         crouchAction.canceled += StopCrouch;
         quitAction.performed += Quit;
         respawnPoint = transform.position;
-        print("Set respawn to " + respawnPoint);
     }
 
     private void Quit(InputAction.CallbackContext context)
@@ -61,25 +63,28 @@ public class PlayerController : MonoBehaviour
     }
     void Jump(InputAction.CallbackContext context)
     {
-        
-        if (grounded || canDoubleJump)
+        if(!crouching)
         {
-            animator.SetBool("Grounded", false);
-            animator.SetBool("Falling", false);
-            Vector2 velocity = rigidbody.velocity;
-            velocity.y = jumpHeight;
-            if (!grounded)
+            if (coyoteCounter > 0f || canDoubleJump)
             {
-                animator.SetBool("DoubleJump", true);
-                canDoubleJump = false;
+                animator.SetBool("Grounded", false);
+                animator.SetBool("Falling", false);
+                Vector2 velocity = rigidbody.velocity;
+                velocity.y = jumpHeight;
+                if (!(coyoteCounter > 0f))
+                {
+                    animator.SetBool("DoubleJump", true);
+                    canDoubleJump = false;
+                }
+                else
+                {
+                    animator.SetBool("Jumping", true);
+                }
+                rigidbody.velocity = velocity;
             }
-            else
-            {
-                animator.SetBool("Jumping", true);
-                grounded = false;
-            }
-            rigidbody.velocity = velocity;
         }
+        
+        
     }
 
     void StopJump(InputAction.CallbackContext context)
@@ -89,6 +94,7 @@ public class PlayerController : MonoBehaviour
             Vector2 velocity = rigidbody.velocity;
             velocity.y = rigidbody.velocity.y * 0.5f;
             rigidbody.velocity = velocity;
+            coyoteCounter = 0f;
         }
     }
 
@@ -117,14 +123,6 @@ public class PlayerController : MonoBehaviour
         crouching = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        grounded = true;
-        canDoubleJump = true;
-        animator.SetBool("Falling", false);
-        animator.SetBool("Grounded", true);
-        animator.SetBool("DoubleJump", false);
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         switch(collision.tag)
@@ -135,8 +133,35 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private bool IsGrounded()
+    {
+        float extraHeight = 0.1f;
+        RaycastHit2D rayHit = Physics2D.BoxCast(collider.bounds.center, collider.bounds.size - new Vector3(0.5f,0f,0f), 0f, Vector2.down, extraHeight, groundLayerMask);
+        if(rayHit.collider != null)
+        {
+            animator.SetBool("Grounded", true);
+            animator.SetBool("DoubleJump", false);
+            animator.SetBool("Falling", false);
+            canDoubleJump = true;
+        }
+        else
+        {
+            animator.SetBool("Grounded", false);
+        }
+        return rayHit.collider != null;
+    }
+
     void Update()
     {
+        if(IsGrounded())
+        {
+            coyoteCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteCounter -= Time.deltaTime;
+        }
+
         if(!crouching)
         {
             Vector2 charVelocity = rigidbody.velocity;
@@ -153,13 +178,20 @@ public class PlayerController : MonoBehaviour
                 facingLeft = false;
             }
             animator.SetFloat("Velocity", Mathf.Abs(charVelocity.x));
-            if (charVelocity.y < -0.1f)
+            if (!IsGrounded()) 
             {
-                grounded = false;
-                animator.SetBool("Falling", true);
-                animator.SetBool("Grounded", false);
-                animator.SetBool("Jumping", false);
+                if(charVelocity.y < -0.1f)
+                {
+                    animator.SetBool("Falling", true);
+                    animator.SetBool("Jumping", false);
+                }
+                else
+                {
+                    animator.SetBool("Falling", false);
+                    animator.SetBool("Jumping", true);
+                }
             }
+            
         }
         
         
