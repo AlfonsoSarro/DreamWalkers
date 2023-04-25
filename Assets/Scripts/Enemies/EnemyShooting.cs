@@ -6,6 +6,8 @@ public class EnemyShooting : MonoBehaviour
 {
     public GameObject bullet;
     public Transform bulletPos;
+    public float range;
+    public float shootingSpeed;
 
     private float timer;
     private GameObject player;
@@ -22,9 +24,9 @@ public class EnemyShooting : MonoBehaviour
 
         float distance = Vector2.Distance(transform.position, player.transform.position);
 
-        if(distance < 10)
+        if(distance < range)
         {
-            if (timer > 2)
+            if (timer > shootingSpeed)
             {
                 timer = 0;
                 Instantiate(bullet, bulletPos.position, Quaternion.identity);

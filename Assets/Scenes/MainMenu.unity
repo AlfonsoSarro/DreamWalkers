@@ -1397,15 +1397,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1581109429}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6bf95ee517be2c45b3f4471ec6e153b, type: 3}
+  m_Script: {fileID: 11500000, guid: 28f51633931ff1744a4ef688cbcccea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playButton: {fileID: 1051180559}
-  optionsButton: {fileID: 1152559290}
-  exitButton: {fileID: 1705149142}
-  returnButton: {fileID: 1722048177}
-  volumeButton: {fileID: 1898721307}
-  slider: {fileID: 1935900707}
+  pauseMenu: {fileID: 0}
 --- !u!4 &1581109431
 Transform:
   m_ObjectHideFlags: 0
@@ -2123,7 +2118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ffb44a63d92813469c5a52f5500debd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 1935900709}
   mixer: {fileID: 24100000, guid: 89e06e238783fa94d98012797ef6c89c, type: 2}
 --- !u!1 &2145239534
 GameObject:

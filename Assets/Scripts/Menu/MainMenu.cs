@@ -11,11 +11,12 @@ public class MainMenu : MonoBehaviour
     public GameObject returnButton;
     public GameObject volumeButton;
     public GameObject slider;
-
+    
     public void GameScene()
     {
         SceneManager.LoadScene("SampleScene");
     }
+    
 
     public void OptionsMenu()
     {
