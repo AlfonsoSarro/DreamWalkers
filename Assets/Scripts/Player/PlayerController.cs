@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight;
     public LayerMask groundLayerMask;
     public float coyoteTime = 0.2f;
+    public LifeSO lifes;
+    public Text lifesText;
 
     private Animator animator;
     //Vector that will store the position of the respawn
@@ -25,9 +29,6 @@ public class PlayerController : MonoBehaviour
     bool canDoubleJump = false;
     bool facingLeft = false;
     bool crouching = false;
-
-    [SerializeField] private AudioSource jumpAudio;
-    [SerializeField] private AudioSource doubleJumpAudio;
 
     private void Awake()
     {
@@ -58,6 +59,7 @@ public class PlayerController : MonoBehaviour
         crouchAction.canceled += StopCrouch;
         quitAction.performed += Quit;
         respawnPoint = transform.position;
+        lifesText.text = "x " + lifes.Value.ToString();
     }
 
     private void Quit(InputAction.CallbackContext context)
@@ -76,13 +78,11 @@ public class PlayerController : MonoBehaviour
                 velocity.y = jumpHeight;
                 if (!(coyoteCounter > 0f))
                 {
-                    doubleJumpAudio.Play();
                     animator.SetBool("DoubleJump", true);
                     canDoubleJump = false;
                 }
                 else
                 {
-                    jumpAudio.Play();
                     animator.SetBool("Jumping", true);
                 }
                 rigidbody.velocity = velocity;
@@ -105,6 +105,7 @@ public class PlayerController : MonoBehaviour
 
     void Crouch(InputAction.CallbackContext context)
     {
+        //TODO: Check if grounded
         crouching = true;
         rigidbody.velocity = new Vector2(0, 0);
         Vector2 colliderSize = collider.size;
@@ -134,6 +135,20 @@ public class PlayerController : MonoBehaviour
         {
             case "Checkpoint":
                 respawnPoint = new Vector3(transform.position.x + 5, transform.position.y, transform.position.z);
+                break;
+            case "DeathTrigger":
+                lifes.Value--;
+                lifesText.text = "x " + lifes.Value.ToString();
+                if (lifes.Value == 0)
+                {
+                    //TODO: Game manager pop up with game over
+                    Debug.Log("Game Over");
+                    SceneManager.LoadScene("MainMenu");
+                }
+                else
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
                 break;
         }
     }

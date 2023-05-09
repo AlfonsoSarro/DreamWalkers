@@ -11,9 +11,12 @@ public class MainMenu : MonoBehaviour
     public GameObject returnButton;
     public GameObject volumeButton;
     public GameObject slider;
+
+    public LifeSO lifes;
     
     public void GameScene()
     {
+        lifes.Value = 10;
         SceneManager.LoadScene("SampleScene");
     }
     

@@ -1416,6 +1416,7 @@ MonoBehaviour:
   returnButton: {fileID: 1722048177}
   volumeButton: {fileID: 1898721307}
   slider: {fileID: 1935900707}
+  lifes: {fileID: 11400000, guid: 0074b5a6717bb734eb5a69e2ad014d71, type: 2}
 --- !u!4 &1581109431
 Transform:
   m_ObjectHideFlags: 0

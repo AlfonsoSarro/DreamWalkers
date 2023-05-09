@@ -11,9 +11,6 @@ public class EnemyShooting : MonoBehaviour
 
     private float timer;
     private GameObject player;
-
-    [SerializeField] private AudioSource shootAudio;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +28,6 @@ public class EnemyShooting : MonoBehaviour
         {
             if (timer > shootingSpeed)
             {
-                shootAudio.Play();
                 timer = 0;
                 Instantiate(bullet, bulletPos.position, Quaternion.identity);
             }
