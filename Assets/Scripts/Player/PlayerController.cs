@@ -105,28 +105,32 @@ public class PlayerController : MonoBehaviour
 
     void Crouch(InputAction.CallbackContext context)
     {
-        //TODO: Check if grounded
-        crouching = true;
-        rigidbody.velocity = new Vector2(0, 0);
-        Vector2 colliderSize = collider.size;
-        Vector2 colliderOffset = collider.offset;
-        colliderSize.y = collider.size.y / 2;
-        colliderOffset.y = collider.offset.y - (collider.size.y / 4);
-        collider.size = colliderSize;
-        collider.offset = colliderOffset;
-        animator.SetBool("Crouching", true);
+        if (IsGrounded()) {
+            crouching = true;
+            rigidbody.velocity = new Vector2(0, 0);
+            Vector2 colliderSize = collider.size;
+            Vector2 colliderOffset = collider.offset;
+            colliderSize.y = collider.size.y / 2;
+            colliderOffset.y = collider.offset.y - (collider.size.y / 4);
+            collider.size = colliderSize;
+            collider.offset = colliderOffset;
+            animator.SetBool("Crouching", true);
+        }
     }
 
     void StopCrouch(InputAction.CallbackContext context)
     {
-        Vector2 colliderSize = collider.size;
-        Vector2 colliderOffset = collider.offset;
-        colliderSize.y = collider.size.y * 2;
-        colliderOffset.y = 0.73f;
-        collider.size = colliderSize;
-        collider.offset = colliderOffset;
-        animator.SetBool("Crouching", false);
-        crouching = false;
+        if (IsGrounded())
+        {
+            Vector2 colliderSize = collider.size;
+            Vector2 colliderOffset = collider.offset;
+            colliderSize.y = collider.size.y * 2;
+            colliderOffset.y = 0.73f;
+            collider.size = colliderSize;
+            collider.offset = colliderOffset;
+            animator.SetBool("Crouching", false);
+            crouching = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

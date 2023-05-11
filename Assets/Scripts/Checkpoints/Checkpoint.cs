@@ -4,22 +4,30 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    public Vector2 previousRoom;
     public Vector2 nextRoom;
     public CameraController camera;
+
+    private BoxCollider2D ownCollider;
+
+    private void Start()
+    {
+        ownCollider = GetComponent<BoxCollider2D>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Player")
         {
-            if(collision.transform.position.x < transform.position.x)
-            {
-                camera.MoveToNewRoom(nextRoom);
-            }
-            else
-            {
-                camera.MoveToNewRoom(previousRoom);
-            }
+            camera.MoveToNewRoom(nextRoom);
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            ownCollider.isTrigger = false;
+        }
+        
     }
 }
