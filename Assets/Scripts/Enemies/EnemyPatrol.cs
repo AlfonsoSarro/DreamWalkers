@@ -11,6 +11,7 @@ public class EnemyPatrol : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        this.enabled = true;
     }
 
     // Update is called once per frame
@@ -32,6 +33,9 @@ public class EnemyPatrol : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        transform.localScale = new Vector2(-(Mathf.Sign(rb.velocity.x)), transform.localScale.y);
+        if (collision.CompareTag("Ground"))
+        {
+            transform.localScale = new Vector2(-(Mathf.Sign(rb.velocity.x)), transform.localScale.y);
+        }
     }
 }
