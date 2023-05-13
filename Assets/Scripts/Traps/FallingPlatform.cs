@@ -5,6 +5,7 @@ using UnityEngine;
 public class FallingPlatform : MonoBehaviour
 {
     public float destroyDelay;
+    public bool fallUp;
 
     private Rigidbody2D rb;
     // Start is called before the first frame update
@@ -17,7 +18,15 @@ public class FallingPlatform : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player"))
         {
-            rb.bodyType = RigidbodyType2D.Dynamic;
+            
+            if(fallUp)
+            {
+                rb.velocity = new Vector2(0, 15);
+            }
+            else
+            {
+                rb.bodyType = RigidbodyType2D.Dynamic;
+            }
             Destroy(gameObject, destroyDelay);
         }
     }

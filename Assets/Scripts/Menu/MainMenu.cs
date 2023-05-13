@@ -17,7 +17,7 @@ public class MainMenu : MonoBehaviour
     public void GameScene()
     {
         lifes.Value = 10;
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("ForestLevel");
     }
     
 

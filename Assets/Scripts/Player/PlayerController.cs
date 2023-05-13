@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
         switch(collision.tag)
         {
             case "Checkpoint":
-                respawnPoint = new Vector3(transform.position.x + 5, transform.position.y, transform.position.z);
+                respawnPoint = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z);
                 break;
             case "DeathTrigger":
                 lifes.Value--;
