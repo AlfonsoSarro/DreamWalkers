@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
     bool facingLeft = false;
     bool crouching = false;
 
+    [SerializeField] private AudioSource jumpAudio;
+    [SerializeField] private AudioSource doubleJumpAudio;
+
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -78,12 +81,14 @@ public class PlayerController : MonoBehaviour
                 velocity.y = jumpHeight;
                 if (!(coyoteCounter > 0f))
                 {
+                    doubleJumpAudio.Play();
                     animator.SetBool("DoubleJump", true);
                     canDoubleJump = false;
                 }
                 else
                 {
                     animator.SetBool("Jumping", true);
+                    jumpAudio.Play();
                 }
                 rigidbody.velocity = velocity;
             }

@@ -8,6 +8,9 @@ public class EnemyChase : MonoBehaviour
     public float speed;
 
     private Transform enemyTransform;
+
+    [SerializeField] private AudioSource chaseAudio;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +28,11 @@ public class EnemyChase : MonoBehaviour
         if((IsFacingRight() && PlayerIsFacingRight()) || (!IsFacingRight() && !PlayerIsFacingRight()))
         {
             transform.position = Vector2.MoveTowards(this.transform.position, player.GetComponent<Renderer>().bounds.center, speed * Time.deltaTime);
+        }
+        else
+        {
+            chaseAudio.loop = true;
+            chaseAudio.Play();
         }
 
         transform.rotation = Quaternion.Euler(Vector3.forward * angle);
