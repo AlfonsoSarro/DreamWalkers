@@ -8,6 +8,7 @@ public class EnemyChase : MonoBehaviour
     public float speed;
 
     private Transform enemyTransform;
+    private SpriteRenderer sprite;
 
     [SerializeField] private AudioSource chaseAudio;
 
@@ -15,6 +16,7 @@ public class EnemyChase : MonoBehaviour
     void Start()
     {
         enemyTransform = GetComponent<Transform>();
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -41,7 +43,16 @@ public class EnemyChase : MonoBehaviour
 
     private bool IsFacingRight()
     {
-        return enemyTransform.rotation.z >= -0.7f && enemyTransform.rotation.z <= 0.7f;
+        if (enemyTransform.rotation.z >= -0.7f && enemyTransform.rotation.z <= 0.7f)
+        {
+            sprite.flipY = false;
+            return true;
+        }
+        else
+        {
+            sprite.flipY = true;
+            return false;
+        }
     }
 
     private bool PlayerIsFacingRight()
