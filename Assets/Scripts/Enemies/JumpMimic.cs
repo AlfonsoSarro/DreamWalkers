@@ -12,6 +12,7 @@ public class JumpMimic : MonoBehaviour
     public float jumpHeight;
     public LayerMask groundLayerMask;
     new BoxCollider2D collider;
+    private Animator animator;
     
 
     Rigidbody2D rb;
@@ -32,6 +33,7 @@ public class JumpMimic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
         jumpAction.performed += Jump;
@@ -42,6 +44,10 @@ public class JumpMimic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(speed != 0)
+        {
+            animator.SetBool("Walk", true);
+        }
         if (IsFacingRight())
         {
             rb.velocity = new Vector2(speed, rb.velocity.y);
@@ -56,16 +62,17 @@ public class JumpMimic : MonoBehaviour
     {
         return transform.localScale.x > Mathf.Epsilon;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Ground"))
+        if (collision.CompareTag("Bound"))
         {
-            transform.localScale = new Vector2(-(Mathf.Sign(rb.velocity.x)), transform.localScale.y);
+            transform.localScale = new Vector2(-(transform.localScale.x), transform.localScale.y);
         }
     }
 
     void Jump(InputAction.CallbackContext context)
-    { 
+    {
+        Debug.Log("Jump detected");
         if (IsGrounded() || canDoubleJump)
         {
             if (!IsGrounded())
@@ -75,6 +82,7 @@ public class JumpMimic : MonoBehaviour
             Vector2 velocity = rb.velocity;
             velocity.y = jumpHeight;
             rb.velocity = velocity;
+            animator.SetBool("Jump", true);
         }
         
 
@@ -88,6 +96,7 @@ public class JumpMimic : MonoBehaviour
             Vector2 velocity = rb.velocity;
             velocity.y = rb.velocity.y * 0.5f;
             rb.velocity = velocity;
+            animator.SetBool("Jump", false);
         }
     }
 
