@@ -9,7 +9,6 @@ public class CameraController : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private static Vector3 cameraPos = new Vector3(0, 0, -10);
 
-
     private void Awake()
     {
         transform.position = cameraPos;

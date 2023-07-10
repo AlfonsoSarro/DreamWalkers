@@ -647,6 +647,9 @@ TextureImporter:
   - first:
       213: 6900345027346089689
     second: mainlev_build_214
+  - first:
+      213: 6850224626846149294
+    second: mainlev_build_215
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -1714,7 +1717,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -24.5}
+        - {x: -16, y: 24.5}
+        - {x: 16, y: 7.5}
+        - {x: 16, y: -24.5}
       tessellationDetail: 0
       bones: []
       spriteID: 9d9bc0814e8e94130800000000000000
@@ -1735,7 +1742,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -24.5}
+        - {x: -16, y: 24.5}
+        - {x: 16, y: 7.5}
+        - {x: 16, y: -24.5}
       tessellationDetail: 0
       bones: []
       spriteID: a08fef78575cbaa60800000000000000
@@ -1756,7 +1767,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -24}
+        - {x: -16, y: 24}
+        - {x: 16, y: 10}
+        - {x: 16, y: -24}
       tessellationDetail: 0
       bones: []
       spriteID: a3ff2dbac6ac2b8e0800000000000000
@@ -1903,7 +1918,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -24}
+        - {x: -16, y: 10}
+        - {x: 16, y: 24}
+        - {x: 16, y: -24}
       tessellationDetail: 0
       bones: []
       spriteID: 999f4b9fc5192d1c0800000000000000
@@ -1924,7 +1943,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -24.5}
+        - {x: -16, y: 6.5}
+        - {x: 16, y: 24.5}
+        - {x: 16, y: -24.5}
       tessellationDetail: 0
       bones: []
       spriteID: f6ded99b38efe5740800000000000000
@@ -1945,7 +1968,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -24.5}
+        - {x: -16, y: 7.5}
+        - {x: 16, y: 24.5}
+        - {x: 16, y: -24.5}
       tessellationDetail: 0
       bones: []
       spriteID: 1bf70594be0c9b460800000000000000
@@ -3050,8 +3077,8 @@ TextureImporter:
       name: mainlev_build_110
       rect:
         serializedVersion: 2
-        x: 384
-        y: 544
+        x: 304
+        y: 581
         width: 16
         height: 32
       alignment: 0
@@ -3100,7 +3127,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -9, y: -16}
+        - {x: -12, y: 12}
+        - {x: 5, y: 12}
+        - {x: 17, y: -16}
+      - - {x: 9, y: 4}
+        - {x: 7, y: 7}
+        - {x: 17, y: 9}
+        - {x: 17, y: -16}
       tessellationDetail: 0
       bones: []
       spriteID: c8ec1259c88d60200800000000000000
@@ -3121,7 +3156,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -8, y: -16}
+        - {x: -9, y: 11}
+        - {x: 16, y: 16}
+        - {x: 16, y: -16}
       tessellationDetail: 0
       bones: []
       spriteID: e82310c6ba4e5c910800000000000000
@@ -5239,7 +5278,7 @@ TextureImporter:
         width: 32
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -5247,6 +5286,27 @@ TextureImporter:
       bones: []
       spriteID: 9d6c8962e33f2cf50800000000000000
       internalID: 6900345027346089689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mainlev_build_215
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 552
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 2, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eaa2cca0103e01f50800000000000000
+      internalID: 6850224626846149294
       vertices: []
       indices: 
       edges: []

@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
     private Animator animator;
     //Vector that will store the position of the respawn
-    private static Vector3 respawnPoint = new Vector3(-1, -5.5f, 0);
+    private static Vector3 respawnPoint = new Vector3(-1, -3, 0); 
     new Rigidbody2D rigidbody;
     new CapsuleCollider2D collider;
     private float coyoteCounter;
