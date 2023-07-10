@@ -35,7 +35,7 @@ public class EnemyPatrol : MonoBehaviour
     {
         if (collision.CompareTag("Ground"))
         {
-            transform.localScale = new Vector2(-(Mathf.Sign(rb.velocity.x)), transform.localScale.y);
+            transform.localScale = new Vector2(-(transform.localScale.x), transform.localScale.y);
         }
     }
 }
