@@ -28124,9 +28124,10 @@ GameObject:
   - component: {fileID: 1095824597}
   - component: {fileID: 1095824598}
   - component: {fileID: 1095824599}
+  - component: {fileID: 1095824600}
   m_Layer: 0
   m_Name: ChangeScene
-  m_TagString: Untagged
+  m_TagString: Scene
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28184,6 +28185,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: CaveLevel
+--- !u!114 &1095824600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095824596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89c9a408b4ae94a4aa7b4ad205815263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextRoom: {x: 0, y: 0}
+  camera: {fileID: 1041570255}
 --- !u!1 &1107937282 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5016703918103793635, guid: bc3703ffbdde1814496fb4d61395b4c6, type: 3}

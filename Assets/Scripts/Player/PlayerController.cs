@@ -159,6 +159,9 @@ public class PlayerController : MonoBehaviour
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
                 break;
+            case "Scene":
+                respawnPoint = new Vector3(0, 0, 0);
+                break;
         }
     }
 
