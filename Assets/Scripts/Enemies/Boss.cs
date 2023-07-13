@@ -12,6 +12,8 @@ public class Boss : MonoBehaviour
     private CapsuleCollider2D capsuleCollider;
     private BoxCollider2D boxCollider;
 
+    public GameObject winMenu;
+
     private bool dead = false;
     // Start is called before the first frame update
     void Start()
@@ -49,6 +51,7 @@ public class Boss : MonoBehaviour
             boxCollider.size = new Vector2(0.01f, 0.01f);
             boxCollider.offset = new Vector2(0f, -0.3f);
             dead = true;
+            winMenu.SetActive(true);
         }
     }
 }

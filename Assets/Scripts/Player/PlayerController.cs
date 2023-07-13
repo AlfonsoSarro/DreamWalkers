@@ -150,9 +150,7 @@ public class PlayerController : MonoBehaviour
                 lifesText.text = "x " + lifes.Value.ToString();
                 if (lifes.Value == 0)
                 {
-                    //TODO: Game manager pop up with game over
                     Debug.Log("Game Over");
-                    SceneManager.LoadScene("MainMenu");
                 }
                 else
                 {
