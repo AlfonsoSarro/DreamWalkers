@@ -7523,6 +7523,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7222847254880398505, guid: 5a5a7e2321ec9d8499c44cfa694c784c, type: 3}
+      propertyPath: camara
+      value: 
+      objectReference: {fileID: 1041570254}
+    - target: {fileID: 7222847254880398505, guid: 5a5a7e2321ec9d8499c44cfa694c784c, type: 3}
       propertyPath: jumpAudio
       value: 
       objectReference: {fileID: 916395113}
@@ -28766,6 +28770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.5
+  lifes: {fileID: 11400000, guid: 0074b5a6717bb734eb5a69e2ad014d71, type: 2}
 --- !u!81 &1041570256
 AudioListener:
   m_ObjectHideFlags: 0

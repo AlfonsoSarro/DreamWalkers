@@ -25,6 +25,5 @@ public class CameraController : MonoBehaviour
         destPos.x = newRoom.x;
         destPos.y = newRoom.y;
         cameraPos = new Vector3(newRoom.x, newRoom.y, transform.position.z);
-        
     }
 }

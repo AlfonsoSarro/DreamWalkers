@@ -17,6 +17,7 @@ public class MainMenu : MonoBehaviour
     public void GameScene()
     {
         lifes.Value = 10;
+        Time.timeScale = 1f;
         SceneManager.LoadScene("ForestLevel");
     }
     

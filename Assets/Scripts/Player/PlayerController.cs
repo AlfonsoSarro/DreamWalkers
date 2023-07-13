@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public float coyoteTime = 0.2f;
     public LifeSO lifes;
     public Text lifesText;
+    
 
     private Animator animator;
     //Vector that will store the position of the respawn
