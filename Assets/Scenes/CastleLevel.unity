@@ -49956,7 +49956,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.5
-  lifes: {fileID: 11400000, guid: 0074b5a6717bb734eb5a69e2ad014d71, type: 2}
 --- !u!81 &1424665237
 AudioListener:
   m_ObjectHideFlags: 0
@@ -54860,6 +54859,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 7222847254880398505, guid: 5a5a7e2321ec9d8499c44cfa694c784c, type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 1424665236}
     - target: {fileID: 7222847254880398505, guid: 5a5a7e2321ec9d8499c44cfa694c784c, type: 3}
       propertyPath: jumpAudio
       value: 

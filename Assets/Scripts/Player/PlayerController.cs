@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour
     public float coyoteTime = 0.2f;
     public LifeSO lifes;
     public Text lifesText;
-    
+    public CameraController camera;
+    public Vector2 nextRoom;
 
     private Animator animator;
     //Vector that will store the position of the respawn
@@ -151,7 +152,10 @@ public class PlayerController : MonoBehaviour
                 lifesText.text = "x " + lifes.Value.ToString();
                 if (lifes.Value == 0)
                 {
+                    camera.MoveToNewRoom(nextRoom);
+                    respawnPoint = new Vector3(-1, -3, 0);
                     Debug.Log("Game Over");
+
                 }
                 else
                 {
