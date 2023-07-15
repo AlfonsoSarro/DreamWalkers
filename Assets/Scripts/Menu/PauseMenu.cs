@@ -7,6 +7,7 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool gameIsPaused = false;
     public GameObject pauseMenu;
+    public CameraController camera;
 
     // Update is called once per frame
     void Update()
@@ -34,6 +35,8 @@ public class PauseMenu : MonoBehaviour
 
     public void Exit()
     {
+        PlayerController.respawnPoint = new Vector3(0, 0, 0);
+        camera.MoveToNewRoom(new Vector2(0, 0));
         SceneManager.LoadScene("MainMenu");
     }
 

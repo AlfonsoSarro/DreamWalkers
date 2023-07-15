@@ -10581,6 +10581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 885814514}
+  camera: {fileID: 1041570255}
 --- !u!114 &864017477
 MonoBehaviour:
   m_ObjectHideFlags: 0
