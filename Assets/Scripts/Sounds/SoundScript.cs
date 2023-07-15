@@ -1,20 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SoundScript : MonoBehaviour
 {
-    public static SoundScript instance;
+    [SerializeField] private AudioSource forestSong;
+    [SerializeField] private AudioSource caveSong;
+    [SerializeField] private AudioSource castleSong;
 
     private void Awake()
     {
-        if (instance != null && instance != this) { 
-            Destroy(this.gameObject);
-            return;
+        if (SceneManager.GetActiveScene().name == "CaveLevel")
+        {
+            forestSong.Pause();
         }
-
-        instance = this;
-        DontDestroyOnLoad(this);
+        if (SceneManager.GetActiveScene().name == "CastleLevel")
+        {
+            caveSong.Pause();
+        }
     }
-
 }
