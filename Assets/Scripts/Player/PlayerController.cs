@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
     private InputAction jumpAction; //Store our controls
     private InputAction moveAction; //Store our controls
     private InputAction crouchAction; //Store our controls
-    private InputAction quitAction; //Store our controls
 
     public float speed;
     public float jumpHeight;
@@ -41,7 +40,6 @@ public class PlayerController : MonoBehaviour
         jumpAction = playerInput.actions["Jump"];
         moveAction = playerInput.actions["Move"];
         crouchAction = playerInput.actions["Crouch"];
-        quitAction = playerInput.actions["Quit"];
         transform.position = respawnPoint;
     }
     
@@ -62,15 +60,10 @@ public class PlayerController : MonoBehaviour
         jumpAction.canceled += StopJump;
         crouchAction.performed += Crouch;
         crouchAction.canceled += StopCrouch;
-        quitAction.performed += Quit;
         respawnPoint = transform.position;
         lifesText.text = "x " + lifes.Value.ToString();
     }
 
-    private void Quit(InputAction.CallbackContext context)
-    {
-        Application.Quit();
-    }
     void Jump(InputAction.CallbackContext context)
     {
         if(!crouching)

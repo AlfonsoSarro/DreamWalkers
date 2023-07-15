@@ -10101,8 +10101,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 586794461}
-        m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
+      - m_Target: {fileID: 586794462}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: Exit
         m_Mode: 1
         m_Arguments:
@@ -13832,7 +13832,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 89e06e238783fa94d98012797ef6c89c, type: 2}
   m_audioClip: {fileID: 8300000, guid: 31047538dd7aa7b409ade822b542265e, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -13928,7 +13928,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 89e06e238783fa94d98012797ef6c89c, type: 2}
   m_audioClip: {fileID: 8300000, guid: 6097edba89cc7bd4590bdfeb7281f03f, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
